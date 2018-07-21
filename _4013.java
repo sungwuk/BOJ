@@ -4,9 +4,9 @@ import java.io.FileInputStream;
 class Solution
 {
     static boolean[][] mag = new boolean[6][10];
-    static void sol(int m,int r) {      //ÀÎÀÚ : µ¹¸± ÀÚ¼®°ú, µ¹¸±¹æÇâ
+    static void sol(int m,int r) {      //ì¸ì : ëŒë¦´ ìì„ê³¼, ëŒë¦´ë°©í–¥
  
-        if(r==1) {                      //½Ã°è¹æÇâÀ¸·Î µ¹¸®´Â °æ¿ì 1
+        if(r==1) {                      //ì‹œê³„ë°©í–¥ìœ¼ë¡œ ëŒë¦¬ëŠ” ê²½ìš° 1
             if(m==1) {
                 if(!check(mag[m][3],mag[m+1][7])) {
                     if(!check(mag[m+1][3],mag[m+2][7])) {
@@ -51,7 +51,7 @@ class Solution
             rotate_Clock(m);
         }
          
-        else if(r==-1){                         //¹İ½Ã°è ¹æÇâÀ¸·Î -1
+        else if(r==-1){                         //ë°˜ì‹œê³„ ë°©í–¥ìœ¼ë¡œ -1
             if(m==1) {
                 if(!check(mag[m][3],mag[m+1][7])) {
                     if(!check(mag[m+1][3],mag[m+2][7])) {
@@ -95,7 +95,7 @@ class Solution
             }
             rotate_counterClock(m);
         }
-        //µ¹¸²
+        //ëŒë¦¼
     }
     static boolean check(boolean a,boolean b) {
         return (a==b)? true:false;
