@@ -1,7 +1,8 @@
 import java.util.*;
 public class _11057 {
 	public static void main(String[] args) {
-		int n,dap=0;
+		int n;
+		int dap=0;
 		Scanner sc = new Scanner(System.in);
 		n=sc.nextInt();
 		int[][] dp = new int[1002][10];
