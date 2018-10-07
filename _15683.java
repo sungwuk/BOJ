@@ -1,60 +1,93 @@
 import java.util.*;
 public class _15683 {
-	static int dx[]= {0,0,1,-1};
-	static int dy[]= {1,-1,0,0};
-	static int n,m;
-	static boolean[][] check;
-	static boolean check(int x, int y) {
-		if(x<0||y<0||x>=n||y>=m) return false;
-		return true;
-	}
-	static void east(int [][]ma, int x, int y) {
-		if(check(x,y)) return;
-		else {
-			int nx  = x+dx[0];
-			int ny =  y+dy[0];
-			if(ma[nx][ny]==6) return;
-			if(ma[nx][ny]!=6||ma[nx][ny]!=0) {
-				east(ma,nx,ny+dy[0]);
-			}
-			else {
-				east(ma,nx,ny);
-			}
+	static int map[][],arr[][],size,dir[],dx[],dy[],count=0,n,m,dap=Integer.MAX_VALUE;
+	static boolean[][] chk;
+	static LinkedList<Point> list= new LinkedList<>();
+	static class Point{
+		int x,y,cam,cd=0;
+		Point(int x, int y,int cnum){
+			this.x=x;this.y=y;this.cam=cnum;
 		}
 	}
-	static void west(int [][]ma, int x, int y) {
-		
+	static void dfs(int x,int y, int dit) {
+		if(x<0||y<0||x>=n||y>=m) return;
+		if(arr[x][y]==6) return;
+		if(arr[x][y]==0) arr[x][y]=-1;
+		if(dit==0) dfs(x-1,y,dit);				
+		if(dit==1) dfs(x,y+1,dit); 
+		if(dit==2) dfs(x+1,y,dit);
+		if(dit==3) dfs(x,y-1,dit); 
 	}
-	static void south(int [][]ma, int x, int y) {
-		
+
+	static void search(int x,int y, int direct,int cam) {		//í˜„ì¬ ì¹´ë©”ë¼ ìœ„ì¹˜(x,y) ì§€ì‹œ ë°©í–¥ (4ê°œ) ,ì¹´ë©”ë¼ ë²ˆí˜¸
+		if(cam==1) {
+			dfs(x,y,direct);
+		}
+		if(cam==2) {
+			dfs(x,y,direct);
+			dfs(x,y,(direct+2)%4);
+		}
+		if(cam==3) {
+			dfs(x,y,direct);
+			dfs(x,y,(direct+1)%4);
+		}
+		if(cam==4) {
+			dfs(x,y,direct);
+			dfs(x,y,(direct+1)%4);
+			dfs(x,y,(direct+3)%4);
+		}
+		if(cam==5) {
+			dfs(x,y,direct);
+			dfs(x,y,(direct+1)%4);
+			dfs(x,y,(direct+2)%4);
+			dfs(x,y,(direct+3)%4);
+		}
 	}
-	static void north(int [][]ma, int x, int y) {
-		
+	static void init() {
+		for(int i=0;i<map.length;i++) {
+			System.arraycopy(map[i], 0, arr[i], 0, map[i].length);
+		}
+		count=0;
+		chk = new boolean[n][m];
+	}
+	static void solve(int c,int dep) {
+		if(c==size) {				//ëª¨ë“  ì¹´ë©”ë¼ì˜ ë°©í–¥ì´ ê²°ì •ë˜ê³  checkí•´ì•¼ í•¨.
+			init();
+			for(int i=0;i<size;i++) {
+				int cx = list.get(i).x,cy=list.get(i).y;
+				search(cx,cy,dir[i],list.get(i).cam);
+			}
+
+			for(int i=0;i<n;i++) {
+				for(int j=0;j<m;j++) {
+					if(arr[i][j]==0) count++;
+				}
+			}
+			dap = Math.min(dap, count);
+		}
+		else {
+			for(int i=0;i<4;i++) {
+				dir[c]=i;
+				solve(c+1,i+1);
+			}
+		}
 	}
 	public static void main(String[] args) {
-		Scanner sc = new Scanner(System.in);
-		n = sc.nextInt();
-		m =sc.nextInt();
-		int map[][] = new int[n][m];
-		check = new boolean[n][m];
+		Scanner sc= new Scanner(System.in);
+		n=sc.nextInt();m=sc.nextInt();
+		map = new int[n][m];
+		arr = new int[n][m];
 		for(int i=0;i<n;i++) {
 			for(int j=0;j<m;j++) {
-				map[i][j]= sc.nextInt();
-			}
-		}
-		// camera : 1~5, wall : 6 space : 0 
-		// °¢ Ä«¸Ş¶ó ¸¶´Ù ÃÖ´ë °¨½Ã ¿µ¿ª ±¸ÇÏ±â
-		
-		for(int i=0;i<n;i++) {
-			for(int j=0;j<m;j++) {
-				if(map[i][j]!=0||map[i][j]!=6) {				//°¨½ÃÄ«¸Ş¶ó
+				map[i][j]=sc.nextInt();
+				if(map[i][j]!=0&&map[i][j]!=6) {
+					list.add(new Point(i,j,map[i][j])); 			//ì¹´ë©”ë¼ ê¸°ë¡ ìœ„ì¹˜
 				}
 			}
 		}
-		
-		
-		
-		
+		size = list.size();
+		dir = new int[size];
+		solve(0,0);
+		System.out.println(dap);
 	}
-
 }
