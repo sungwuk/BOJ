@@ -30,12 +30,9 @@ public class _5658 {
 			in = new String(arr);
 		}
 		LinkedList<Long> list1 =new LinkedList<>();
-		for(String s : list) {
-			list1.add(Long.parseLong(s,16));
-		}
 		Object[] tmp = list.toArray();
 		Arrays.sort(tmp);
-		System.out.println("#"+c+" "+Long.parseLong((String) tmp[list1.size()-k],16));
+		System.out.println("#"+c+" "+Long.parseLong((String) tmp[list.size()-k],16));
 	}
 	public static void main(String[] args) {
 		Scanner sc= new Scanner(System.in);
