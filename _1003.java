@@ -1,19 +1,25 @@
 import java.util.*;
 public class _1003 {
 	public static void main(String[] args) {
-		int T,N;
-		Scanner scan = new Scanner(System.in);
-		T=scan.nextInt();
-		int [][]dp = new int[41][41];
-		dp[0][0]=1;dp[0][1]=0;
-		dp[1][0]=0;dp[1][1]=1;
-		for(int i=0;i<T;i++) {
-			N= scan.nextInt();
-			for(int j=2;j<=N;j++) {
-				dp[j][0]=dp[j-1][0]+dp[j-2][0];
-				dp[j][1]=dp[j-1][1]+dp[j-2][1];
+		Scanner sc = new Scanner(System.in);
+		int t = sc.nextInt();
+		for(int i=1;i<=t;i++) {
+			int n = sc.nextInt();
+			if(n==0) {
+				System.out.println(1+" "+0);
 			}
-			System.out.println(dp[N][0]+" "+dp[N][1]);
+			else if(n==1) System.out.println(0+" "+1);
+			else {
+				int dp1[] = new int[n+1];
+				int dp2[] = new int[n+1];
+				dp1[0]=1;dp1[1]=0;dp2[0]=0;dp2[1]=1;
+				for(int k=2;k<=n;k++) {
+					dp1[k] = dp1[k-1]+dp1[k-2];
+					dp2[k] = dp2[k-1]+dp2[k-2];
+				}
+				System.out.println(dp1[n]+" "+dp2[n]);
+			}
 		}
 	}
+
 }
